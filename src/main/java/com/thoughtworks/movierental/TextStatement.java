@@ -4,15 +4,11 @@ import java.util.List;
 
 public class TextStatement {
     private final String name;
-    private final double totalAmount;
-    private final int totalFrequentRenterPoints;
-    private final List<Rental> rentals;
+    private Rentals rentals;
 
-    public TextStatement(String name, double totalAmount, int totalFrequentRenterPoints, List<Rental> rentals) {
+    public TextStatement(String name, Rentals rentals) {
         this.name = name;
-        this.totalAmount = totalAmount;
-        this.totalFrequentRenterPoints = totalFrequentRenterPoints;
-        this.rentals = rentals;
+      this.rentals = rentals;
     }
 
     public String createStatement() {
@@ -27,7 +23,7 @@ public class TextStatement {
 
     String textBody() {
         String body = "";
-        for (Rental rental : rentals) {
+        for (Rental rental : rentals.rentals) {
             body += "\t" + rental.getMovie().getTitle() + "\t" + rental.amount() + "\n";
         }
         return body;
@@ -35,8 +31,8 @@ public class TextStatement {
 
     String textFooter() {
         String footer = "";
-        footer += "Amount owed is " + totalAmount + "\n";
-        footer += "You earned " + totalFrequentRenterPoints + " frequent renter points";
+        footer += "Amount owed is " + rentals.totalAmount() + "\n";
+        footer += "You earned " + rentals.totalFrequentRenters() + " frequent renter points";
         return footer;
     }
 }
