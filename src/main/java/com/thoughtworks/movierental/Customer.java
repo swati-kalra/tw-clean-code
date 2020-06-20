@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private String name;
+  private String name;
     private List<Rental> rentals = new ArrayList<>();
 
     public Customer(String name) {
@@ -19,20 +19,32 @@ public class Customer {
         return name;
     }
 
-    public String statement() {
-        return header() + body() + footer();
+    public String statement(){
+      return new TextStatement(this.name, totalAmount(), totalFrequentRenters(), this.rentals).createStatement();
     }
 
-    private String header() {
+    public String htmlStatement() {
+        return htmlHeader() + htmlBody() + htmlFooter();
+    }
+
+    private String htmlHeader() {
         String header = "";
-        header = "Rental Record for " + getName() + "\n";
+        header = "<h1>Rental Record for <b>" + getName() + "</b></h1><br/>";
         return header;
     }
 
-    private String footer() {
+    private String htmlBody() {
+        String body = "";
+        for (Rental rental : rentals) {
+            body += rental.getMovie().getTitle() + " " + rental.amount() + "<br/>";
+        }
+        return body;
+    }
+
+    private String htmlFooter() {
         String footer = "";
-        footer += "Amount owed is " + totalAmount() + "\n";
-        footer += "You earned " + totalFrequentRenters() + " frequent renter points";
+        footer += "Amount owed is <b>" + totalAmount() + "</b><br/>";
+        footer += "You earned <b>" + totalFrequentRenters() + "</b> frequent renter points<br/>";
         return footer;
     }
 
@@ -42,14 +54,6 @@ public class Customer {
             frequentRenterPoints += rental.frequentRenter();
         }
         return frequentRenterPoints;
-    }
-
-    private String body() {
-        String body = "";
-        for (Rental rental : rentals) {
-            body += "\t" + rental.getMovie().getTitle() + "\t" + rental.amount() + "\n";
-        }
-        return body;
     }
 
     private double totalAmount() {
