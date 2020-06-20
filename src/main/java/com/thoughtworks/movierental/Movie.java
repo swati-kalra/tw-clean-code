@@ -25,4 +25,8 @@ public class Movie {
     return title;
   }
 
+  boolean isNewRelease() {
+    return priceCode == Movie.NEW_RELEASE;
+  }
+
 }
