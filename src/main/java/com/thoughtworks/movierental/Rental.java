@@ -18,7 +18,7 @@ public class Rental {
   }
 
   double amount() {
-    return price().amount(daysRented);
+    return movie.price().amount(daysRented);
   }
 
   public int frequentRenter(){
