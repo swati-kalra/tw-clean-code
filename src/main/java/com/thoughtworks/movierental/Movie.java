@@ -29,4 +29,17 @@ public class Movie {
     return priceCode == Movie.NEW_RELEASE;
   }
 
+  Price price(){
+    switch (getPriceCode()) {
+      case Movie.REGULAR:
+        return new RegularPrice();
+      case Movie.NEW_RELEASE:
+        return new NewReleasePrice();
+      case Movie.CHILDRENS:
+        return new ChildrenPrice();
+      default:
+        return new DefaultPrice();
+    }
+  }
+
 }
