@@ -13,31 +13,41 @@ public class Rental {
     this.daysRented = daysRented;
   }
 
-  public int getDaysRented() {
-    return daysRented;
-  }
-
   public Movie getMovie() {
     return movie;
   }
 
   public double amount() {
-    double amount = 0;
     switch (movie.getPriceCode()) {
       case Movie.REGULAR:
-        amount += 2;
-        if (daysRented> 2)
-          amount += (daysRented - 2) * 1.5;
-        break;
+        return regularAmount();
       case Movie.NEW_RELEASE:
-        amount += daysRented * 3;
-        break;
+        return newReleaseAmount();
       case Movie.CHILDRENS:
-        amount += 1.5;
-        if (daysRented > 3)
-          amount += (daysRented - 3) * 1.5;
-        break;
+        return childrenAmount();
     }
+    return 0;
+  }
+
+  private double childrenAmount() {
+    double amount = 0;
+    amount += 1.5;
+    if (daysRented > 3)
+      amount += (daysRented - 3) * 1.5;
+    return amount;
+  }
+
+  private double newReleaseAmount() {
+    double amount = 0;
+    amount += daysRented * 3;
+    return amount;
+  }
+
+  private double regularAmount() {
+    double amount = 0;
+    amount += 2;
+    if (daysRented > 2)
+      amount += (daysRented - 2) * 1.5;
     return amount;
   }
 
